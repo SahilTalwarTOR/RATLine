@@ -1,30 +1,47 @@
+from os.path import exists
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import openpyxl
-from conda.base.constants import ValueEnum
 from datetime import datetime
 import time
+import os
 
+#Setting up our config file
+while True:
+    try:
+        file = "config.txt"
+
+        with open(file, 'r') as f:
+            lines = f.readlines()
+        colors = {}
+        for line in lines:
+            key, value = line.strip().split(':')
+            colors[key.strip()] = value.strip()
+        break
+    except FileNotFoundError:
+        print("The config file for colours does not exist, did you include it in the current directory?", __file__)
+
+print("Colours Configured")
 
 print("PLEASE ENSURE ALL EXCEL FILES ARE LOCATED IN THE SAME FOLDER AS THIS SCRIPT")
 print("Current Script Location:", __file__)
 while True:
     try:
         excel_name = str(input("Enter the excel file name (without .xlsl)"))
-        break
+        if os.path.isfile(excel_name + ".xlsx"):
+            break
+        else:
+            raise FileNotFoundError()
     except FileNotFoundError:
-        print("The file does not exist.")
+        print("The file does not exist, make sure the excel file is typed without .xlsx, and is included in the same directory as the script\nCurrent Directory: ", __file__)
+
+
 start = time.time()
 df = pd.DataFrame()
 fig, ax = plt.subplots(figsize=(10,4))
 
-colors = {
-    'W': 'tab:blue',
-    'R': 'tab:orange',
-    'S': 'tab:green',
-    'G': 'magenta',
-    'D': 'tab:red'
-}
+
 
 
 for x in pd.ExcelFile(excel_name + ".xlsx").sheet_names:

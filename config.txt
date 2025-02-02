@@ -1,0 +1,10 @@
+W: blue
+R: orange
+S: green
+G: magenta
+D: red
+F: navy
+E: springgreen
+C: violet
+Z: darkred
+T: aqua
