@@ -2,6 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import openpyxl
 from conda.base.constants import ValueEnum
+from datetime import datetime
+import time
+
 
 print("PLEASE ENSURE ALL EXCEL FILES ARE LOCATED IN THE SAME FOLDER AS THIS SCRIPT")
 print("Current Script Location:", __file__)
@@ -11,7 +14,7 @@ while True:
         break
     except FileNotFoundError:
         print("The file does not exist.")
-
+start = time.time()
 df = pd.DataFrame()
 fig, ax = plt.subplots(figsize=(10,4))
 
@@ -59,6 +62,9 @@ ax.grid(True, axis='x', linestyle='--', alpha=0.7)
 ax.set_ylim(-1, len(rats))  # Adjust to fit all rats
 
 plt.tight_layout()
+end = time.time()
+name = "Sheet " + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".png"
+plt.savefig(name, dpi=300, bbox_inches='tight')
 plt.show()
-plt.savefig("Shee")
+print("Execution: ", end - start, "s")
 
